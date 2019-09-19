@@ -1,0 +1,53 @@
+language: node_js
+node_js:
+  - "10.15.3"
+
+dist: trusty
+
+sudo: required
+jdk:
+  - oraclejdk8
+
+cache:
+  directories:
+    - node_modules
+
+branches:
+  only:
+    - master
+
+notifications:
+  flowdock:
+    secure: "tSjMLbGqqLMvaZa3r/T4ybAtF5sM2bqJZH0Yxqmp+C4z2aUxY68njy/BfrBb4zSFe6CKPQHvz0PJ7UN3H5PiEEA88Jem7AUNbYf4WdPE7th6VIzU4uqF7bxJmgIxAFMDAc5M6Q7j8VPkM20SJOkwcf9iTO5q+3y0JxtlK4++MZ23kJcIIUYBM9qtRrJwF+FQp4y3K4GHQJ8xqU7o7ZiUgcL17dFN07ASbMqUz4cPbzeOEbL6VCF/cIZZsbgalCXMNuy2sVf3nsEq54T/3YxQI7HhsuHn1uW4gTySy1CzMDRv/zeUWX8C6Y8WZq0yl6e+XyvYGHdKA1mJim06NubOgyp9l1ShfXT9qbFndyTdW1erIHPOVVjoraQT/lKhESPKUvdO1SahE6Pa0JkoL9eYAyLfEsc/wH4Ur1iOcRjjuRXwmq1xDHQUmCxU5HGB4RQ659WkxC9Xt1nNadUlVmC/wmpOpPWgs00UfesdFJYguj4nGAfhargnfdmiJhGotCYqw5weJ/e75OwQYNiiYvble9EQeRxrUCR9Db0ujWoIngecKQmwS0z15ciftLe+VclnKXddl6C9ANMODXMeMm3CFG9kgCEwV5HbLI7lm4Hy776GvXJR1zLDQpYlUQBzi+5QtDEiAvCn+zH8TjYE17yVHgWSLRyS90xlG8EQ2xkA7uU="
+
+before_install:
+  - echo "Pass -before install-"
+  - chmod 555 ./scripts/jobsuccess.sh
+  - chmod 555 ./scripts/jobfail2.sh
+
+script:
+  - echo "Pass -script-"
+  - pwd
+  - ls -al
+
+after_script:
+  - echo "Pass -after install-"
+
+after_success:
+  - ./scripts/jobsuccess.sh
+
+after_failure:
+  - ./scripts/jobfail2.sh
+
+deploy:
+- provider: codedeploy
+  access_key_id: $ACCESS_KEY
+  secret_access_key: $SECRET_KEY
+  application: componentSample
+  deployment_group: componentSample
+  region: ap-northeast-1
+
+env:
+  global:
+  - GH_REF: github.com/m-sugizaki/tmpRepository.git
+ 

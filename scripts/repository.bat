@@ -1,0 +1,1 @@
+powershell "Copy-Item C:\Workspace\componentSample\*.zip C:\Repository\componentSample"

@@ -1,0 +1,7 @@
+.bowerrc
+.editorconfig
+README.md
+bin
+node_modules
+package.json
+tmp
